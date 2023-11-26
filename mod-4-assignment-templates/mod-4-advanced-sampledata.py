@@ -93,7 +93,7 @@ Sample data for ETA below:
 (from_stop, to_stop)
 '''
 
-legs = {
+legs1 = {
      ("upd","admu"):{
          "travel_time_mins":10
      },
@@ -105,7 +105,7 @@ legs = {
      }
 }
 
-legs = {
+legs2 = {
     ('a1', 'a2'): {
         'travel_time_mins': 10
     },

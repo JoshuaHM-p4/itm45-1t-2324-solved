@@ -4,6 +4,7 @@ Parsing Data
 
 This assignment covers your ability to manipulate data in Python.
 '''
+import importlib
 
 def relationship_status(from_member, to_member, social_graph):
     '''Relationship Status.
@@ -29,7 +30,7 @@ def relationship_status(from_member, to_member, social_graph):
     to_member: str
         the object member
     social_graph: dict
-        the relationship data    
+        the relationship data
 
     Returns
     -------
@@ -39,16 +40,34 @@ def relationship_status(from_member, to_member, social_graph):
         "friends" if fromMember and toMember follow each other,
         "no relationship" if neither fromMember nor toMember follow each other.
     '''
-    # Replace `pass` with your code. 
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    status = ""
+
+    # Retreive from and to member follows data
+    from_member_follows = social_graph.get(from_member, {}).get("following", [])
+    to_member_follows = social_graph.get(to_member, {}).get("following", [])
+
+    # Check if to_member is a folllower of from_member
+    if to_member in from_member_follows:
+        status = "follower"
+
+    # Check if from_member follows to_member -> followed by or if both are followers -> "friends"
+    if from_member in to_member_follows:
+        if status == "follower":
+            status = "friends"
+        else:
+            status = "followed by"
+
+    if not status:
+        status = "no relationship"
+
+    return status
 
 
 def tic_tac_toe(board):
-    '''Tic Tac Toe. 
+    '''Tic Tac Toe.
     15 points.
 
-    Tic Tac Toe is a common paper-and-pencil game. 
+    Tic Tac Toe is a common paper-and-pencil game.
     Players must attempt to successfully draw a straight line of their symbol across a grid.
     The player that does this first is considered the winner.
 
@@ -68,12 +87,34 @@ def tic_tac_toe(board):
     str
         the symbol of the winner or "NO WINNER" if there is no winner
     '''
-    # Replace `pass` with your code. 
+    # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+    # Board is equal on both sides, thus we iterate
+    for ind, row in enumerate(board):
+        # Check Row Winners
+        if len(set(row)) == 1 and row[0] != '':
+            return row[0]
+
+        # Check for column
+        column = [board[val][ind] for val in range(len(board))]
+        if len(set(column)) == 1 and column[0] != '':
+            return board[0][ind]
+
+    # Check for diagonals
+    l_diagonal = [board[x][x] for x in range(len(board))]
+    r_diagonal = [board[x][len(board)-1-x] for x in range(len(board))]
+
+    if len(set(l_diagonal)) == 1 and l_diagonal[0] != 0:
+        return l_diagonal[0]
+    if len(set(r_diagonal)) == 1 and r_diagonal[0] != 0:
+        return r_diagonal[1]
+
+    # Return no winner after no one has won
+    return "NO WINNER"
 
 def eta(first_stop, second_stop, route_map):
-    '''ETA. 
+    '''ETA.
     20 points.
 
     A shuttle van service is tasked to travel along a predefined circlar route.
@@ -101,6 +142,40 @@ def eta(first_stop, second_stop, route_map):
     int
         the time it will take the shuttle to travel from first_stop to second_stop
     '''
-    # Replace `pass` with your code. 
+    # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+    if (first_stop, second_stop) in route_map:
+        return route_map[(first_stop, second_stop)]["travel_time_mins"]
+
+    current_stop = first_stop
+    total_time = 0
+
+    while current_stop != second_stop:
+        next_stop_found = False
+        for key, value in route_map.items():
+            if key[0] == current_stop:
+                total_time += value["travel_time_mins"]
+                current_stop = key[1]
+                next_stop_found = True
+                break  # Stop the loop once the next stop is found
+
+        if not next_stop_found:
+            return -1
+
+    return total_time
+
+# sample_data = importlib.import_module("mod-4-advanced-sampledata")
+
+# def main():
+#     member_one = input("Enter your username: ")
+#     member_two = input("Enter the other person's username: ")
+#     print(relationship_status(member_one, member_two, sample_data.social_graph))
+
+#     print(tic_tac_toe(sample_data.board6))
+
+#     print(eta("a1", "b1", sample_data.legs2))
+
+
+# if __name__ == "__main__":
+#     main()
