@@ -11,7 +11,7 @@ def savings(gross_pay, tax_rate, expenses):
 
     This function calculates the money remaining
         for an employee after taxes and expenses.
-    
+
     To get the take-home pay of an employee, we will
         follow the following process:
         1. Apply the tax rate to the gross pay of the employee; round down
@@ -31,9 +31,16 @@ def savings(gross_pay, tax_rate, expenses):
     int
         the number of centavos remaining from an employee's pay after taxes and expenses
     '''
-    # Replace `pass` with your code. 
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    # Apply the tax rate to the gross pay  of the employee, rounded down using floor division
+    tax_amount = gross_pay * tax_rate
+    after_tax_pay = gross_pay - tax_amount
+
+    # Subtract the expenses from the
+    take_home_pay = after_tax_pay - expenses
+
+    # Return the take home pay integer expressed in centavos
+    return int(take_home_pay)
+
 
 def material_waste(total_material, material_units, num_jobs, job_consumption):
     '''Material Waste.
@@ -66,9 +73,17 @@ def material_waste(total_material, material_units, num_jobs, job_consumption):
     str
         the amount of remaining material expressed with its unit (e.g., "10kg").
     '''
-    # Replace `pass` with your code. 
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+    # Get the waste set of jobs
+    total_consumption = num_jobs * job_consumption
+
+    # Find the remaining material after consuming set of jobs
+    remaining_material = total_material - total_consumption
+
+    # Return the results in with a string representation of the remaining material + the unit
+    return f"{remaining_material}{material_units}"
+
+
 
 def interest(principal, rate, periods):
     '''Interest.
@@ -77,7 +92,7 @@ def interest(principal, rate, periods):
     This function calculates the final value of an investment after
         gaining simple interest over a number of periods.
 
-    To calculate simple interest, simply multiply the principal to the quantity (rate * time). 
+    To calculate simple interest, simply multiply the principal to the quantity (rate * time).
         Add this amount to the principal to get the final value.
 
     Round down the final amount.
@@ -96,9 +111,10 @@ def interest(principal, rate, periods):
     int
         the final value of the investment
     '''
-    # Replace `pass` with your code. 
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    # From the problem we can find interest expressed and simplified with the formula: A + P(1+rt)
+    final_amount_interest = principal + (1 + (rate*periods))
+
+    return int(final_amount_interest)
 
 def body_mass_index(weight, height):
     '''Body Mass Index.
@@ -112,7 +128,7 @@ def body_mass_index(weight, height):
 
     Unfortunately, the users of this function use the imperial system.
         You will need to first convert their arguments to the metric system.
-    
+
     Parameters
     ----------
     weight: float
@@ -128,6 +144,14 @@ def body_mass_index(weight, height):
     float
         the BMI of the person.
     '''
-    # Replace `pass` with your code. 
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    # Convert the weight in pounds into kg by dividing by 2.205
+    weight_kg = weight / 2.205
+
+    # Convert the total height in feet and inch into meters
+    total_height_inches = height[0] * 12 + height[1]
+    height_meter = total_height_inches / 39.37
+
+    # Calculate the BMI
+    bmi = weight_kg / (height_meter**2)
+
+    return bmi

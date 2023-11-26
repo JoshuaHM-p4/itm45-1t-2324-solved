@@ -2,13 +2,13 @@
 
 Thinking Like a Programmer
 
-This assignment covers your intermediate proficiency with Python.
+This assignment covers your "inter"mediate proficiency with Python.
 '''
 
 def shift_letter(letter, shift):
-    '''Shift Letter. 
+    '''Shift Letter.
     4 points.
-    
+
     Shift a letter right by the given number.
     Wrap the letter around if it reaches the end of the alphabet.
 
@@ -27,7 +27,7 @@ def shift_letter(letter, shift):
     letter: str
         a single uppercase English letter, or a space.
     shift: int
-        the number by which to shift the letter. 
+        the number by which to shift the letter.
 
     Returns
     -------
@@ -35,14 +35,26 @@ def shift_letter(letter, shift):
         the letter, shifted appropriately, if a letter.
         a single space if the original letter was a space.
     '''
-    # Replace `pass` with your code. 
+    # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+    if not letter.isalpha():
+        return letter if letter == " " else None
+
+    # Using ASCII values to shift amount
+    ascii_offset = 65
+    shifted_letter = chr((ord(letter) - ascii_offset + shift) % 26 + ascii_offset)
+
+    if not 65 <= ord(shifted_letter) <= 90:  # If the shifted value exceeds the uppercase range
+        shifted_letter = chr((ord(shifted_letter) - 65) % 26 + 65)  # Wrap back to uppercase range
+
+    return shifted_letter
+
 
 def caesar_cipher(message, shift):
-    '''Caesar Cipher. 
+    '''Caesar Cipher.
     6 points.
-    
+
     Apply a shift number to a string of uppercase English letters and spaces.
 
     Parameters
@@ -50,23 +62,38 @@ def caesar_cipher(message, shift):
     message: str
         a string of uppercase English letters and spaces.
     shift: int
-        the number by which to shift the letters. 
+        the number by which to shift the letters.
 
     Returns
     -------
     str
         the message, shifted appropriately.
     '''
-    # Replace `pass` with your code. 
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    shifted_message = ""
+    ascii_offset = 65
+
+    for ch in message:
+        if ch.isupper():
+            ascii_offset = 65
+            shifted_ch = chr((ord(ch) - ascii_offset + shift) % 26 + ascii_offset)
+
+            if not 65 <= ord(shifted_ch) <= 90:  # If the shifted value exceeds the uppercase range
+                shifed_ch = chr((ord(shifted_ch) - 65) % 26 + ascii_offset)  # Wrap back to uppercase range
+
+            shifted_message += shifted_ch
+
+        elif ch == " ":
+            shifted_message += ch
+
+        else:
+            pass
 
 def shift_by_letter(letter, letter_shift):
-    '''Shift By Letter. 
+    '''Shift By Letter.
     4 points.
-    
+
     Shift a letter to the right using the number equivalent of another letter.
-    The shift letter is any letter from A to Z, where A represents 0, B represents 1, 
+    The shift letter is any letter from A to Z, where A represents 0, B represents 1,
         ..., Z represents 25.
 
     Examples:
@@ -87,16 +114,27 @@ def shift_by_letter(letter, letter_shift):
     str
         the letter, shifted appropriately.
     '''
-    # Replace `pass` with your code. 
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    if not letter.isalpha():
+        return letter if letter == " " else None
+
+    # Translate the letter shit from A to Z to 0 to 25
+    shift = ord(letter_shift) - 65
+
+    # Using ASCII values to shift amount
+    ascii_offset = 65
+    shifted_letter = chr((ord(letter) - ascii_offset + shift) % 26 + ascii_offset)
+
+    if not 65 <= ord(shifted_letter) <= 90:  # If the shifted value exceeds the uppercase range
+        shifted_letter = chr((ord(shifted_letter) - 65) % 26 + 65)  # Wrap back to uppercase range
+
+    return shifted_letter
 
 def vigenere_cipher(message, key):
-    '''Vigenere Cipher. 
+    '''Vigenere Cipher.
     6 points.
-    
+
     Encrypts a message using a keyphrase instead of a static number.
-    Every letter in the message is shifted by the number represented by the 
+    Every letter in the message is shifted by the number represented by the
         respective letter in the key.
     Spaces should be ignored.
 
@@ -120,6 +158,25 @@ def vigenere_cipher(message, key):
     str
         the message, shifted appropriately.
     '''
-    # Replace `pass` with your code. 
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    shifted_message = ""
+    ascii_offset = 65
+
+    for index, ch in enumerate(message):
+        shift = ord(key[index]) - 65
+
+        if ch.isupper():
+            ascii_offset = 65
+            shifted_ch = chr((ord(ch) - ascii_offset + shift) % 26 + ascii_offset)
+
+            if not 65 <= ord(shifted_ch) <= 90:  # If the shifted value exceeds the uppercase range
+                shifed_ch = chr((ord(shifted_ch) - 65) % 26 + ascii_offset)  # Wrap back to uppercase range
+
+            shifted_message += shifted_ch
+
+        elif ch == " ":
+            shifted_message += ch
+
+        else:
+            pass
+
+    return shifted_message
