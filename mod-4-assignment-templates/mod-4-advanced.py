@@ -4,7 +4,6 @@ Parsing Data
 
 This assignment covers your ability to manipulate data in Python.
 '''
-import importlib
 
 def relationship_status(from_member, to_member, social_graph):
     '''Relationship Status.
